@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+  body{font-family:'Hanken Grotesk',sans-serif;background:#16201e;color:#e9e4d8;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  ::selection{background:#d8ad63;color:#16201e}
+  a{color:#d8ad63;text-decoration:none;transition:color .3s}
+  a:hover{color:#e8c883}
+  ::-webkit-scrollbar{width:11px}
+  ::-webkit-scrollbar-track{background:#111917}
+  ::-webkit-scrollbar-thumb{background:#334340;border-radius:6px;border:3px solid #111917}
+  ::-webkit-scrollbar-thumb:hover{background:#d8ad63}
+  @keyframes flY{0%,100%{transform:translateY(0)}50%{transform:translateY(-26px)}}
+  @keyframes flY2{0%,100%{transform:translateY(0)}50%{transform:translateY(20px)}}
+  @keyframes spinS{to{transform:rotate(360deg)}}
+  @keyframes spinR{to{transform:rotate(-360deg)}}
+  @keyframes sheen{to{background-position:220% center}}
+  @keyframes gridPan{to{background-position:64px 64px}}
+  @keyframes mq{to{transform:translateX(-50%)}}
+  @keyframes pring{0%{transform:scale(.8);opacity:.7}100%{transform:scale(1.8);opacity:0}}
+  @keyframes bob{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-14px) rotate(3deg)}}
+  @media(max-width:920px){
+    #fl-navlinks{display:none!important}
+    #fl-burger{display:flex!important}
+    .fl-2col{grid-template-columns:1fr!important}
+    .fl-ind{grid-template-columns:1fr!important}
+    .fl-cta-grid{grid-template-columns:1fr!important}
+  }
+  @media(max-width:640px){
+    .fl-stat-grid{grid-template-columns:1fr 1fr!important}
+  }
+</style>
+</helmet>
+<div id="fl-root" style="position:relative">
+
+  <!-- ================= NAV ================= -->
+  <header id="fl-nav" data-screen-label="Nav" style="position:fixed;top:0;left:0;right:0;z-index:80;transition:background .45s ease,padding .45s ease,box-shadow .45s ease,border-color .45s ease;padding:22px clamp(16px,4vw,52px);border-bottom:1px solid rgba(255,255,255,0)">
+    <div style="max-width:1360px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:24px">
+      <a href="#top" aria-label="Frontline Latam inicio" style="display:flex;align-items:center;gap:13px">
+        <svg width="34" height="38" viewBox="0 0 34 38" fill="none" aria-hidden="true"><path d="M2 4.5C2 3.12 3.12 2 4.5 2H29.5C30.88 2 32 3.12 32 4.5V22.2C32 23.05 31.57 23.84 30.86 24.3L18.1 32.6C17.43 33.04 16.57 33.04 15.9 32.6L3.14 24.3C2.43 23.84 2 23.05 2 22.2V4.5Z" fill="url(#gsh)"/><path d="M13 9H24V13.2H17.2V16.4H23V20.4H17.2V27L13 24.3V9Z" fill="#16201e"/><defs><linearGradient id="gsh" x1="2" y1="2" x2="30" y2="33" gradientUnits="userSpaceOnUse"><stop stop-color="#e8c883"/><stop offset="1" stop-color="#c99b47"/></linearGradient></defs></svg>
+        <span style="display:flex;flex-direction:column;line-height:.92">
+          <span style="font-family:'Archivo';font-weight:800;letter-spacing:.2em;font-size:17px;color:#f2ede3">FRONTLINE</span>
+          <span style="font-family:'Archivo';font-weight:500;letter-spacing:.44em;font-size:9.5px;color:#d8ad63;margin-left:2px">LATAM</span>
+        </span>
+      </a>
+      <nav id="fl-navlinks" style="display:flex;gap:36px;align-items:center">
+        <a href="#productos" style="color:#cdd6d2;font-size:14.5px;font-weight:500;letter-spacing:.01em">Productos</a>
+        <a href="#industrias" style="color:#cdd6d2;font-size:14.5px;font-weight:500;letter-spacing:.01em">Industrias</a>
+        <a href="#diferencia" style="color:#cdd6d2;font-size:14.5px;font-weight:500;letter-spacing:.01em">Nosotros</a>
+        <a href="#soporte" style="color:#cdd6d2;font-size:14.5px;font-weight:500;letter-spacing:.01em">Soporte</a>
+        <a href="#contacto" style="display:inline-flex;align-items:center;gap:8px;background:linear-gradient(120deg,#e8c883,#c99b47);color:#16201e;font-weight:700;font-size:14px;padding:11px 22px;border-radius:2px;letter-spacing:.02em;box-shadow:0 8px 24px -10px rgba(216,173,99,.6)">Solicitar cotización
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="#16201e" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </nav>
+      <button id="fl-burger" aria-label="Abrir menú" style="display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:8px">
+        <span style="width:26px;height:2px;background:#e9e4d8;display:block;transition:.3s"></span>
+        <span style="width:26px;height:2px;background:#e9e4d8;display:block;transition:.3s"></span>
+        <span style="width:18px;height:2px;background:#d8ad63;display:block;transition:.3s"></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- mobile menu -->
+  <div id="fl-mobile" style="position:fixed;inset:0;z-index:79;background:rgba(16,23,21,.97);backdrop-filter:blur(8px);display:none;flex-direction:column;align-items:center;justify-content:center;gap:30px">
+    <a href="#productos" data-mclose style="font-family:'Archivo';font-weight:700;font-size:28px;color:#f2ede3;letter-spacing:.04em">Productos</a>
+    <a href="#industrias" data-mclose style="font-family:'Archivo';font-weight:700;font-size:28px;color:#f2ede3;letter-spacing:.04em">Industrias</a>
+    <a href="#diferencia" data-mclose style="font-family:'Archivo';font-weight:700;font-size:28px;color:#f2ede3;letter-spacing:.04em">Nosotros</a>
+    <a href="#soporte" data-mclose style="font-family:'Archivo';font-weight:700;font-size:28px;color:#f2ede3;letter-spacing:.04em">Soporte</a>
+    <a href="#contacto" data-mclose style="margin-top:14px;background:linear-gradient(120deg,#e8c883,#c99b47);color:#16201e;font-weight:700;font-size:16px;padding:15px 34px;border-radius:2px">Solicitar cotización</a>
+  </div>
+
+  <!-- ================= HERO ================= -->
+  <section id="top" style="position:relative;min-height:100svh;display:flex;align-items:center;overflow:hidden;background:radial-gradient(120% 90% at 78% 12%,#22322f 0%,#16201e 55%,#101816 100%)">
+    <!-- grid -->
+    <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(216,173,99,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(216,173,99,.055) 1px,transparent 1px);background-size:64px 64px;animation:gridPan 9s linear infinite;mask-image:radial-gradient(80% 80% at 70% 30%,#000 20%,transparent 85%)"></div>
+    <!-- glow follows mouse -->
+    <div id="hero-glow" style="position:absolute;width:640px;height:640px;left:50%;top:40%;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(216,173,99,.13),transparent 68%);pointer-events:none;transition:left .3s ease,top .3s ease"></div>
+    <!-- floating shapes -->
+    <div data-px="0.22" style="position:absolute;right:8%;top:20%;animation:flY 7s ease-in-out infinite">
+      <svg width="120" height="130" viewBox="0 0 34 38" fill="none" style="opacity:.5"><path d="M2 4.5C2 3.12 3.12 2 4.5 2H29.5C30.88 2 32 3.12 32 4.5V22.2C32 23.05 31.57 23.84 30.86 24.3L18.1 32.6C17.43 33.04 16.57 33.04 15.9 32.6L3.14 24.3C2.43 23.84 2 23.05 2 22.2V4.5Z" stroke="#d8ad63" stroke-width="0.8"/></svg>
+    </div>
+    <div data-px="0.4" style="position:absolute;right:24%;top:62%;animation:flY2 8.5s ease-in-out infinite">
+      <svg width="70" height="80" viewBox="0 0 60 68" fill="none" style="opacity:.35"><path d="M30 2 56 17V51L30 66 4 51V17Z" stroke="#5f7873" stroke-width="1"/></svg>
+    </div>
+    <div data-px="0.3" style="position:absolute;left:6%;bottom:16%;animation:spinS 34s linear infinite;opacity:.28">
+      <svg width="90" height="90" viewBox="0 0 100 100" fill="none"><g stroke="#d8ad63" stroke-width="1"><circle cx="50" cy="50" r="30"/><circle cx="50" cy="50" r="18"/><path d="M50 8v12M50 80v12M8 50h12M80 50h12M20 20l9 9M71 71l9 9M80 20l-9 9M29 71l-9 9"/></g></svg>
+    </div>
+    <div data-px="0.5" style="position:absolute;left:14%;top:24%;width:8px;height:8px;border-radius:50%;background:#d8ad63;box-shadow:0 0 20px 3px rgba(216,173,99,.5);animation:bob 6s ease-in-out infinite"></div>
+
+    <div style="position:relative;z-index:5;max-width:1360px;margin:0 auto;width:100%;padding:120px clamp(20px,5vw,60px) 80px">
+      <div data-reveal style="opacity:0;transform:translateY(26px);transition:opacity .8s ease,transform .8s ease;display:inline-flex;align-items:center;gap:12px;padding:9px 16px;border:1px solid rgba(216,173,99,.32);border-radius:100px;margin-bottom:30px">
+        <span style="width:7px;height:7px;border-radius:50%;background:#d8ad63;box-shadow:0 0 10px #d8ad63"></span>
+        <span style="font-family:'Archivo';font-size:11.5px;letter-spacing:.28em;color:#d8ad63;font-weight:600">SOLUCIONES INDUSTRIALES · IBARRA, ECUADOR</span>
+      </div>
+      <h1 data-reveal style="opacity:0;transform:translateY(30px);transition:opacity .9s ease .08s,transform .9s ease .08s;font-family:'Archivo';font-weight:800;font-size:clamp(42px,7.4vw,108px);line-height:.98;letter-spacing:-.02em;color:#f5f1e8;max-width:16ch">Producto industrial de <span style="background:linear-gradient(100deg,#e8c883,#c99b47,#e8c883);background-size:220% auto;-webkit-background-clip:text;background-clip:text;color:transparent;animation:sheen 6s linear infinite">primera línea</span>, respaldado por ingeniería.</h1>
+      <p data-reveal style="opacity:0;transform:translateY(30px);transition:opacity .9s ease .18s,transform .9s ease .18s;margin-top:28px;max-width:56ch;font-size:clamp(16px,1.6vw,20px);line-height:1.6;color:#aebbb6;font-weight:400">Herramientas, seguridad y aprovisionamiento para minería, energía y manufactura. La mejor oferta del mercado, cumplimiento garantizado y un soporte que no se detiene después de la entrega.</p>
+      <div data-reveal style="opacity:0;transform:translateY(30px);transition:opacity .9s ease .28s,transform .9s ease .28s;display:flex;flex-wrap:wrap;gap:16px;margin-top:40px">
+        <a href="#contacto" style="display:inline-flex;align-items:center;gap:10px;background:linear-gradient(120deg,#e8c883,#c99b47);color:#16201e;font-weight:700;font-size:15.5px;padding:16px 30px;border-radius:2px;letter-spacing:.01em;box-shadow:0 14px 40px -14px rgba(216,173,99,.7)">Solicitar cotización
+          <svg width="15" height="15" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="#16201e" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a href="#productos" style="display:inline-flex;align-items:center;gap:10px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.16);color:#e9e4d8;font-weight:600;font-size:15.5px;padding:16px 28px;border-radius:2px">Ver catálogo de productos</a>
+      </div>
+      <div data-reveal style="opacity:0;transform:translateY(30px);transition:opacity .9s ease .38s,transform .9s ease .38s;display:flex;flex-wrap:wrap;gap:28px 40px;margin-top:56px;padding-top:32px;border-top:1px solid rgba(255,255,255,.09)">
+        <div style="display:flex;align-items:center;gap:11px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 2l8 3v6c0 5-3.5 8.5-8 11-4.5-2.5-8-6-8-11V5l8-3z" stroke="#d8ad63" stroke-width="1.5"/><path d="M8.5 12l2.5 2.5 4.5-5" stroke="#d8ad63" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-size:13.5px;color:#9aaba6">Producto certificado</span></div>
+        <div style="display:flex;align-items:center;gap:11px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M3 7h13l5 5v5h-3M3 7v10h2M9 17h6M3 11h8" stroke="#d8ad63" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="7" cy="17" r="2" stroke="#d8ad63" stroke-width="1.5"/><circle cx="18" cy="17" r="2" stroke="#d8ad63" stroke-width="1.5"/></svg><span style="font-size:13.5px;color:#9aaba6">Entrega a todo el país</span></div>
+        <div style="display:flex;align-items:center;gap:11px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 3v18M3 12h18" stroke="#d8ad63" stroke-width="1.5" stroke-linecap="round"/><circle cx="12" cy="12" r="9" stroke="#d8ad63" stroke-width="1.5"/></svg><span style="font-size:13.5px;color:#9aaba6">Asesoría técnica especializada</span></div>
+      </div>
+    </div>
+    <div style="position:absolute;bottom:26px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;z-index:5">
+      <span style="font-size:10.5px;letter-spacing:.3em;color:#5f7873;font-family:'Archivo'">SCROLL</span>
+      <div style="width:1px;height:44px;background:linear-gradient(#d8ad63,transparent)"></div>
+    </div>
+  </section>
+
+  <!-- ================= BRANDS MARQUEE ================= -->
+  <section style="background:#101816;border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06);padding:34px 0;overflow:hidden">
+    <p style="text-align:center;font-family:'Archivo';font-size:11px;letter-spacing:.3em;color:#5f7873;margin-bottom:26px">REPRESENTAMOS Y DISTRIBUIMOS MARCAS LÍDERES</p>
+    <div style="display:flex;width:max-content;animation:mq 32s linear infinite;gap:72px;opacity:.62">
+      <div style="display:flex;gap:72px;align-items:center;font-family:'Archivo';font-weight:700;font-size:22px;letter-spacing:.06em;color:#8a9a95">
+        <span>3M</span><span>STANLEY</span><span>BOSCH</span><span>MSA</span><span>DEWALT</span><span>HONEYWELL</span><span>3M</span><span>STANLEY</span><span>BOSCH</span><span>MSA</span><span>DEWALT</span><span>HONEYWELL</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= STATS ================= -->
+  <section style="background:#16201e;padding:clamp(60px,8vw,110px) clamp(20px,5vw,60px)">
+    <div class="fl-stat-grid" style="max-width:1360px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08)">
+      <div data-reveal style="opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease;background:#16201e;padding:38px 26px">
+        <div style="font-family:'Archivo';font-weight:800;font-size:clamp(38px,4.6vw,60px);color:#d8ad63;line-height:1" data-count="15" data-prefix="+">+0</div>
+        <div style="margin-top:10px;font-size:14.5px;color:#9aaba6;letter-spacing:.01em">años equipando la industria</div>
+      </div>
+      <div data-reveal style="opacity:0;transform:translateY(24px);transition:opacity .7s ease .08s,transform .7s ease .08s;background:#16201e;padding:38px 26px">
+        <div style="font-family:'Archivo';font-weight:800;font-size:clamp(38px,4.6vw,60px);color:#d8ad63;line-height:1" data-count="200" data-prefix="+">+0</div>
+        <div style="margin-top:10px;font-size:14.5px;color:#9aaba6">clientes industriales activos</div>
+      </div>
+      <div data-reveal style="opacity:0;transform:translateY(24px);transition:opacity .7s ease .16s,transform .7s ease .16s;background:#16201e;padding:38px 26px">
+        <div style="font-family:'Archivo';font-weight:800;font-size:clamp(38px,4.6vw,60px);color:#d8ad63;line-height:1" data-count="5000" data-prefix="+">+0</div>
+        <div style="margin-top:10px;font-size:14.5px;color:#9aaba6">productos en catálogo</div>
+      </div>
+      <div data-reveal style="opacity:0;transform:translateY(24px);transition:opacity .7s ease .24s,transform .7s ease .24s;background:#16201e;padding:38px 26px">
+        <div style="font-family:'Archivo';font-weight:800;font-size:clamp(38px,4.6vw,60px);color:#d8ad63;line-height:1" data-count="98" data-suffix="%">0%</div>
+        <div style="margin-top:10px;font-size:14.5px;color:#9aaba6">entregas a tiempo</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PRODUCTS (HERO OF SITE) ================= -->
+  <section id="productos" data-screen-label="Productos" style="background:#f4f1ea;color:#16201e;padding:clamp(70px,9vw,130px) clamp(20px,5vw,60px);position:relative">
+    <div style="max-width:1360px;margin:0 auto">
+      <div style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:56px">
+        <div>
+          <div data-reveal style="opacity:0;transform:translateY(20px);transition:.7s;display:inline-flex;align-items:center;gap:10px;margin-bottom:18px">
+            <span style="width:26px;height:2px;background:#c99b47"></span>
+            <span style="font-family:'Archivo';font-size:12px;letter-spacing:.26em;color:#a9803a;font-weight:700">CATÁLOGO</span>
+          </div>
+          <h2 data-reveal style="opacity:0;transform:translateY(24px);transition:.75s;font-family:'Archivo';font-weight:800;font-size:clamp(30px,4.4vw,58px);line-height:1.02;letter-spacing:-.02em;max-width:18ch">Todo lo que su operación necesita, de un solo proveedor.</h2>
+        </div>
+        <p data-reveal style="opacity:0;transform:translateY(24px);transition:.75s .1s;max-width:38ch;font-size:16px;line-height:1.6;color:#4a5754">Cinco líneas de producto seleccionadas para sostener la operación en campo — con stock local, precios competitivos y respaldo técnico.</p>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px">
+
+        <!-- P1 -->
+        <article data-reveal data-tilt style="opacity:0;transform:translateY(30px);transition:opacity .7s,transform .7s,box-shadow .4s,border-color .4s;grid-column:span 1;background:#fff;border:1px solid #e2ddd0;border-radius:4px;padding:34px 30px;display:flex;flex-direction:column;gap:18px">
+          <div style="width:56px;height:56px;border-radius:3px;background:#16201e;display:flex;align-items:center;justify-content:center">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M14.5 5.5a3.5 3.5 0 00-4.9 4.2L3 16.3 5.7 19l6.6-6.6a3.5 3.5 0 004.2-4.9l-2.3 2.3-1.7-.4-.4-1.7 2.3-2.3z" stroke="#d8ad63" stroke-width="1.5" stroke-linejoin="round"/></svg>
+          </div>
+          <h3 style="font-family:'Archivo';font-weight:700;font-size:21px;letter-spacing:-.01em">Herramientas & Ferretería Industrial</h3>
+          <p style="font-size:14.5px;line-height:1.6;color:#4a5754;flex:1">Herramienta manual y eléctrica, abrasivos, fijaciones y consumibles de las marcas más confiables del mercado.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:8px">
+            <span style="font-size:12px;color:#a9803a;background:#f4ede0;padding:5px 10px;border-radius:2px;font-weight:600">Herr. eléctrica</span>
+            <span style="font-size:12px;color:#a9803a;background:#f4ede0;padding:5px 10px;border-radius:2px;font-weight:600">Abrasivos</span>
+            <span style="font-size:12px;color:#a9803a;background:#f4ede0;padding:5px 10px;border-radius:2px;font-weight:600">Fijaciones</span>
+          </div>
+        </article>
+
+        <!-- P2 -->
+        <article data-reveal data-tilt style="opacity:0;transform:translateY(30px);transition:opacity .7s .06s,transform .7s .06s,box-shadow .4s,border-color .4s;background:#fff;border:1px solid #e2ddd0;border-radius:4px;padding:34px 30px;display:flex;flex-direction:column;gap:18px">
+          <div style="width:56px;height:56px;border-radius:3px;background:#16201e;display:flex;align-items:center;justify-content:center">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M4 14a8 8 0 0116 0" stroke="#d8ad63" stroke-width="1.5"/><path d="M2 14h20v2a1 1 0 01-1 1H3a1 1 0 01-1-1v-2z" stroke="#d8ad63" stroke-width="1.5" stroke-linejoin="round"/><path d="M12 6V4M9 6.5l-.6-1.4M15 6.5l.6-1.4" stroke="#d8ad63" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </div>
+          <h3 style="font-family:'Archivo';font-weight:700;font-size:21px;letter-spacing:-.01em">Seguridad Industrial & EPP</h3>
+          <p style="font-size:14.5px;line-height:1.6;color:#4a5754;flex:1">Equipo de protección personal certificado: cascos, arneses, respiradores y ropa técnica que cumple normativa vigente.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:8px">
+            <span style="font-size:12px;color:#a9803a;background:#f4ede0;padding:5px 10px;border-radius:2px;font-weight:600">EPP certificado</span>
+            <span style="font-size:12px;color:#a9803a;background:#f4ede0;padding:5px 10px;border-radius:2px;font-weight:600">Altura</span>
+            <span style="font-size:12px;color:#a9803a;background:#f4ede0;padding:5px 10px;border-radius:2px;font-weight:600">Respiratoria</span>
+          </div>
+        </article>
+
+        <!-- P3 -->
+        <article data-reveal data-tilt style="opacity:0;transform:translateY(30px);transition:opacity .7s .12s,transform .7s .12s,box-shadow .4s,border-color .4s;background:#fff;border:1px solid #e2ddd0;border-radius:4px;padding:34px 30px;display:flex;flex-direction:column;gap:18px">
+          <div style="width:56px;height:56px;border-radius:3px;background:#16201e;display:flex;align-items:center;justify-content:center">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M3 8l9-4 9 4-9 4-9-4z" stroke="#d8ad63" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 8v8l9 4 9-4V8M12 12v8" stroke="#d8ad63" stroke-width="1.5" stroke-linejoin="round"/></svg>
+          </div>
+          <h3 style="font-family:'Archivo';font-weight:700;font-size:21px;letter-spacing:-.01em">Aprovisionamiento de Campamentos</h3>
+          <p style="font-size:14.5px;line-height:1.6;color:#4a5754;flex:1">Suministro integral para operaciones remotas de gran escala: víveres, insumos, consumibles y logística coordinada.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:8px">
+            <span style="font-size:12px;color:#a9803a;background:#f4ede0;padding:5px 10px;border-radius:2px;font-weight:600">Campos remotos</span>
+            <span style="font-size:12px;color:#a9803a;background:#f4ede0;padding:5px 10px;border-radius:2px;font-weight:600">Logística</span>
+          </div>
+        </article>
+
+        <!-- P4 -->
+        <article data-reveal data-tilt style="opacity:0;transform:translateY(30px);transition:opacity .7s .18s,transform .7s .18s,box-shadow .4s,border-color .4s;background:#fff;border:1px solid #e2ddd0;border-radius:4px;padding:34px 30px;display:flex;flex-direction:column;gap:18px">
+          <div style="width:56px;height:56px;border-radius:3px;background:#16201e;display:flex;align-items:center;justify-content:center">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><rect x="3" y="8" width="18" height="9" rx="1" stroke="#d8ad63" stroke-width="1.5"/><path d="M3 12h18M8 8V6a1 1 0 011-1h6a1 1 0 011 1v2M7 17v2M17 17v2" stroke="#d8ad63" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </div>
+          <h3 style="font-family:'Archivo';font-weight:700;font-size:21px;letter-spacing:-.01em">Campers & Espacios Modulares</h3>
+          <p style="font-size:14.5px;line-height:1.6;color:#4a5754;flex:1">Alquiler de campers, oficinas y módulos habitacionales listos para instalar en cualquier frente de trabajo.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:8px">
+            <span style="font-size:12px;color:#a9803a;background:#f4ede0;padding:5px 10px;border-radius:2px;font-weight:600">Alquiler</span>
+            <span style="font-size:12px;color:#a9803a;background:#f4ede0;padding:5px 10px;border-radius:2px;font-weight:600">Módulos</span>
+          </div>
+        </article>
+
+        <!-- P5 -->
+        <article data-reveal data-tilt style="opacity:0;transform:translateY(30px);transition:opacity .7s .24s,transform .7s .24s,box-shadow .4s,border-color .4s;background:#16201e;color:#f4f1ea;border:1px solid #16201e;border-radius:4px;padding:34px 30px;display:flex;flex-direction:column;gap:18px">
+          <div style="width:56px;height:56px;border-radius:3px;background:rgba(216,173,99,.14);display:flex;align-items:center;justify-content:center">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M2 20L12 5l10 15M2 20h20M8 20l4-6 4 6" stroke="#d8ad63" stroke-width="1.5" stroke-linejoin="round"/></svg>
+          </div>
+          <h3 style="font-family:'Archivo';font-weight:700;font-size:21px;letter-spacing:-.01em">Equipamiento & Mobiliario</h3>
+          <p style="font-size:14.5px;line-height:1.6;color:#aebbb6;flex:1">Gimnasios, carpas, mesas y mobiliario de campamento para acondicionar espacios de trabajo y bienestar.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:8px">
+            <span style="font-size:12px;color:#e8c883;background:rgba(216,173,99,.12);padding:5px 10px;border-radius:2px;font-weight:600">Gimnasios</span>
+            <span style="font-size:12px;color:#e8c883;background:rgba(216,173,99,.12);padding:5px 10px;border-radius:2px;font-weight:600">Carpas & mesas</span>
+          </div>
+        </article>
+
+      </div>
+
+      <div data-reveal style="opacity:0;transform:translateY(20px);transition:.7s;margin-top:44px;display:flex;justify-content:center">
+        <a href="#contacto" style="display:inline-flex;align-items:center;gap:10px;color:#16201e;border:1.5px solid #16201e;font-weight:700;font-size:15px;padding:15px 30px;border-radius:2px">Solicite el catálogo completo
+          <svg width="15" height="15" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="#16201e" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= INDUSTRIES ================= -->
+  <section id="industrias" data-screen-label="Industrias" style="background:#101816;padding:clamp(70px,9vw,130px) clamp(20px,5vw,60px);position:relative;overflow:hidden">
+    <div style="position:absolute;top:-60px;right:-60px;width:340px;height:340px;background:radial-gradient(circle,rgba(216,173,99,.08),transparent 70%)"></div>
+    <div style="max-width:1360px;margin:0 auto;position:relative">
+      <div data-reveal style="opacity:0;transform:translateY(20px);transition:.7s;display:inline-flex;align-items:center;gap:10px;margin-bottom:18px">
+        <span style="width:26px;height:2px;background:#d8ad63"></span>
+        <span style="font-family:'Archivo';font-size:12px;letter-spacing:.26em;color:#d8ad63;font-weight:700">SECTORES</span>
+      </div>
+      <h2 data-reveal style="opacity:0;transform:translateY(24px);transition:.75s;font-family:'Archivo';font-weight:800;font-size:clamp(30px,4.4vw,58px);line-height:1.02;letter-spacing:-.02em;color:#f5f1e8;max-width:20ch;margin-bottom:52px">Entendemos la exigencia de cada industria.</h2>
+      <div class="fl-ind" style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px">
+
+        <article data-reveal style="opacity:0;transform:translateY(30px);transition:.75s;position:relative;border:1px solid rgba(255,255,255,.09);border-radius:5px;overflow:hidden;min-height:400px;display:flex;flex-direction:column;justify-content:flex-end;background:linear-gradient(180deg,#1a2523,#16201e)">
+          <svg viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0;width:100%;height:65%;opacity:.5"><defs><linearGradient id="mg" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#2c3d3a"/><stop offset="1" stop-color="#16201e"/></linearGradient></defs><rect width="400" height="260" fill="url(#mg)"/><path d="M0 200 L80 90 L140 160 L210 60 L280 150 L340 100 L400 180 V260 H0Z" fill="#223230"/><path d="M0 230 L110 140 L190 200 L260 130 L340 190 L400 150 V260 H0Z" fill="#2c3d3a"/><path d="M210 60 l-14 30 h28 z" fill="#d8ad63" opacity=".8"/></svg>
+          <div style="position:relative;padding:32px 28px">
+            <span style="font-family:'Archivo';font-weight:800;font-size:12px;color:#d8ad63;letter-spacing:.2em">01</span>
+            <h3 style="font-family:'Archivo';font-weight:700;font-size:26px;color:#f5f1e8;margin:8px 0 10px">Minería</h3>
+            <p style="font-size:14.5px;line-height:1.6;color:#9aaba6">Producto resistente y EPP certificado para operaciones subterráneas y a cielo abierto, con abastecimiento continuo.</p>
+          </div>
+        </article>
+
+        <article data-reveal style="opacity:0;transform:translateY(30px);transition:.75s .1s;position:relative;border:1px solid rgba(255,255,255,.09);border-radius:5px;overflow:hidden;min-height:400px;display:flex;flex-direction:column;justify-content:flex-end;background:linear-gradient(180deg,#1a2523,#16201e)">
+          <svg viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0;width:100%;height:65%;opacity:.55"><rect width="400" height="260" fill="#1a2523"/><g stroke="#2c3d3a" stroke-width="6" fill="none"><path d="M120 250 L150 60 M280 250 L250 60"/><path d="M135 130 L265 130 M128 190 L272 190"/></g><circle cx="200" cy="55" r="10" fill="#d8ad63"/><g stroke="#d8ad63" stroke-width="4"><path d="M200 55 L200 20 M200 55 L232 74 M200 55 L168 74"/></g></svg>
+          <div style="position:relative;padding:32px 28px">
+            <span style="font-family:'Archivo';font-weight:800;font-size:12px;color:#d8ad63;letter-spacing:.2em">02</span>
+            <h3 style="font-family:'Archivo';font-weight:700;font-size:26px;color:#f5f1e8;margin:8px 0 10px">Energía</h3>
+            <p style="font-size:14.5px;line-height:1.6;color:#9aaba6">Suministro para petróleo, gas y renovables: alta disponibilidad, cumplimiento estricto y respuesta logística ágil.</p>
+          </div>
+        </article>
+
+        <article data-reveal style="opacity:0;transform:translateY(30px);transition:.75s .2s;position:relative;border:1px solid rgba(255,255,255,.09);border-radius:5px;overflow:hidden;min-height:400px;display:flex;flex-direction:column;justify-content:flex-end;background:linear-gradient(180deg,#1a2523,#16201e)">
+          <svg viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0;width:100%;height:65%;opacity:.55"><rect width="400" height="260" fill="#1a2523"/><g fill="#223230"><rect x="40" y="150" width="90" height="110"/><rect x="140" y="110" width="90" height="150"/><rect x="240" y="140" width="120" height="120"/></g><g fill="#2c3d3a"><path d="M140 110 l45 -35 v35z"/><path d="M195 110 l45 -35 v35z"/></g><g fill="#d8ad63" opacity=".85"><rect x="258" y="160" width="16" height="16"/><rect x="290" y="160" width="16" height="16"/><rect x="322" y="160" width="16" height="16"/></g></svg>
+          <div style="position:relative;padding:32px 28px">
+            <span style="font-family:'Archivo';font-weight:800;font-size:12px;color:#d8ad63;letter-spacing:.2em">03</span>
+            <h3 style="font-family:'Archivo';font-weight:700;font-size:26px;color:#f5f1e8;margin:8px 0 10px">Manufactura</h3>
+            <p style="font-size:14.5px;line-height:1.6;color:#9aaba6">Consumibles, herramienta y seguridad para plantas de producción, con inventario que evita paros de línea.</p>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= DIFERENCIA / PILARES ================= -->
+  <section id="diferencia" data-screen-label="Nosotros" style="background:#16201e;padding:clamp(70px,9vw,130px) clamp(20px,5vw,60px)">
+    <div class="fl-2col" style="max-width:1360px;margin:0 auto;display:grid;grid-template-columns:0.85fr 1.15fr;gap:clamp(40px,6vw,90px);align-items:start">
+      <div data-reveal style="opacity:0;transform:translateY(24px);transition:.75s;position:sticky;top:110px">
+        <div style="display:inline-flex;align-items:center;gap:10px;margin-bottom:18px">
+          <span style="width:26px;height:2px;background:#d8ad63"></span>
+          <span style="font-family:'Archivo';font-size:12px;letter-spacing:.26em;color:#d8ad63;font-weight:700">LA DIFERENCIA FRONTLINE</span>
+        </div>
+        <h2 style="font-family:'Archivo';font-weight:800;font-size:clamp(30px,4vw,52px);line-height:1.04;letter-spacing:-.02em;color:#f5f1e8">No solo entregamos producto. Respondemos por él.</h2>
+        <p style="margin-top:22px;font-size:16px;line-height:1.65;color:#aebbb6;max-width:44ch">Nuestro equipo combina conocimiento profundo del sector con las mejores ofertas del mercado. La relación empieza en la cotización y no termina con la entrega.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08)">
+        <div data-reveal style="opacity:0;transform:translateY(24px);transition:.7s;background:#16201e;padding:30px 26px">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M12 2l8 3v6c0 5-3.5 8.5-8 11-4.5-2.5-8-6-8-11V5l8-3z" stroke="#d8ad63" stroke-width="1.5"/><path d="M8.5 12l2.5 2.5 4.5-5" stroke="#d8ad63" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <h3 style="font-family:'Archivo';font-weight:700;font-size:18px;color:#f5f1e8;margin:16px 0 8px">Calidad certificada</h3>
+          <p style="font-size:13.5px;line-height:1.6;color:#9aaba6">Solo producto original y trazable, alineado a normativa.</p>
+        </div>
+        <div data-reveal style="opacity:0;transform:translateY(24px);transition:.7s .06s;background:#16201e;padding:30px 26px">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><rect x="4" y="3" width="16" height="18" rx="1.5" stroke="#d8ad63" stroke-width="1.5"/><path d="M8 8h8M8 12h8M8 16h5" stroke="#d8ad63" stroke-width="1.5" stroke-linecap="round"/></svg>
+          <h3 style="font-family:'Archivo';font-weight:700;font-size:18px;color:#f5f1e8;margin:16px 0 8px">Cumplimiento</h3>
+          <p style="font-size:13.5px;line-height:1.6;color:#9aaba6">Documentación, plazos y estándares que sus auditorías exigen.</p>
+        </div>
+        <div data-reveal style="opacity:0;transform:translateY(24px);transition:.7s .12s;background:#16201e;padding:30px 26px">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M21 12a9 9 0 10-3.5 7.1L21 21l-1.9-3.5" stroke="#d8ad63" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke="#d8ad63" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <h3 style="font-family:'Archivo';font-weight:700;font-size:18px;color:#f5f1e8;margin:16px 0 8px">Servicio postventa</h3>
+          <p style="font-size:13.5px;line-height:1.6;color:#9aaba6">Garantía, repuestos y acompañamiento después de la compra.</p>
+        </div>
+        <div data-reveal style="opacity:0;transform:translateY(24px);transition:.7s .18s;background:#16201e;padding:30px 26px">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="#d8ad63" stroke-width="1.5"/><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6" stroke="#d8ad63" stroke-width="1.5" stroke-linecap="round"/></svg>
+          <h3 style="font-family:'Archivo';font-weight:700;font-size:18px;color:#f5f1e8;margin:16px 0 8px">Experiencia técnica</h3>
+          <p style="font-size:13.5px;line-height:1.6;color:#9aaba6">Un equipo que conoce el producto y su aplicación en campo.</p>
+        </div>
+        <div data-reveal style="opacity:0;transform:translateY(24px);transition:.7s .24s;background:#16201e;padding:30px 26px">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M3 8l9-4 9 4-9 4-9-4z" stroke="#d8ad63" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 8v8l9 4 9-4V8" stroke="#d8ad63" stroke-width="1.5" stroke-linejoin="round"/></svg>
+          <h3 style="font-family:'Archivo';font-weight:700;font-size:18px;color:#f5f1e8;margin:16px 0 8px">Inventario disponible</h3>
+          <p style="font-size:13.5px;line-height:1.6;color:#9aaba6">Stock local que reduce tiempos y evita paros de operación.</p>
+        </div>
+        <div data-reveal style="opacity:0;transform:translateY(24px);transition:.7s .3s;background:#16201e;padding:30px 26px">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M3 7h13l5 5v5h-3M3 7v10h2M9 17h6" stroke="#d8ad63" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="7" cy="17" r="2" stroke="#d8ad63" stroke-width="1.5"/><circle cx="18" cy="17" r="2" stroke="#d8ad63" stroke-width="1.5"/></svg>
+          <h3 style="font-family:'Archivo';font-weight:700;font-size:18px;color:#f5f1e8;margin:16px 0 8px">Entrega ágil</h3>
+          <p style="font-size:13.5px;line-height:1.6;color:#9aaba6">Logística coordinada a todo el país, incluso a frentes remotos.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PROCESO ================= -->
+  <section style="background:#101816;padding:clamp(70px,9vw,120px) clamp(20px,5vw,60px);border-top:1px solid rgba(255,255,255,.06)">
+    <div style="max-width:1360px;margin:0 auto">
+      <div data-reveal style="opacity:0;transform:translateY(20px);transition:.7s;text-align:center;margin-bottom:56px">
+        <span style="font-family:'Archivo';font-size:12px;letter-spacing:.26em;color:#d8ad63;font-weight:700">CÓMO TRABAJAMOS</span>
+        <h2 style="font-family:'Archivo';font-weight:800;font-size:clamp(28px,4vw,50px);line-height:1.05;letter-spacing:-.02em;color:#f5f1e8;margin-top:14px">De la consulta al soporte continuo</h2>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:2px;position:relative">
+        <div data-reveal style="opacity:0;transform:translateY(26px);transition:.7s;padding:34px 26px;position:relative">
+          <div style="font-family:'Archivo';font-weight:800;font-size:52px;color:rgba(216,173,99,.22);line-height:1">01</div>
+          <h3 style="font-family:'Archivo';font-weight:700;font-size:20px;color:#f5f1e8;margin:12px 0 10px">Diagnóstico</h3>
+          <p style="font-size:14px;line-height:1.6;color:#9aaba6">Escuchamos su operación y definimos qué producto necesita realmente.</p>
+        </div>
+        <div data-reveal style="opacity:0;transform:translateY(26px);transition:.7s .1s;padding:34px 26px">
+          <div style="font-family:'Archivo';font-weight:800;font-size:52px;color:rgba(216,173,99,.22);line-height:1">02</div>
+          <h3 style="font-family:'Archivo';font-weight:700;font-size:20px;color:#f5f1e8;margin:12px 0 10px">Cotización</h3>
+          <p style="font-size:14px;line-height:1.6;color:#9aaba6">Propuesta clara, con la mejor oferta del mercado y plazos reales.</p>
+        </div>
+        <div data-reveal style="opacity:0;transform:translateY(26px);transition:.7s .2s;padding:34px 26px">
+          <div style="font-family:'Archivo';font-weight:800;font-size:52px;color:rgba(216,173,99,.22);line-height:1">03</div>
+          <h3 style="font-family:'Archivo';font-weight:700;font-size:20px;color:#f5f1e8;margin:12px 0 10px">Suministro</h3>
+          <p style="font-size:14px;line-height:1.6;color:#9aaba6">Entregamos producto certificado, a tiempo y con documentación completa.</p>
+        </div>
+        <div data-reveal style="opacity:0;transform:translateY(26px);transition:.7s .3s;padding:34px 26px">
+          <div style="font-family:'Archivo';font-weight:800;font-size:52px;color:#d8ad63;line-height:1">04</div>
+          <h3 style="font-family:'Archivo';font-weight:700;font-size:20px;color:#f5f1e8;margin:12px 0 10px">Soporte postventa</h3>
+          <p style="font-size:14px;line-height:1.6;color:#9aaba6">Garantía, reposición y acompañamiento para una relación de largo plazo.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SOPORTE BAND ================= -->
+  <section id="soporte" data-screen-label="Soporte" style="background:#f4f1ea;color:#16201e;padding:clamp(70px,9vw,120px) clamp(20px,5vw,60px)">
+    <div class="fl-2col" style="max-width:1360px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:clamp(40px,6vw,80px);align-items:center">
+      <div data-reveal style="opacity:0;transform:translateY(24px);transition:.75s">
+        <span style="font-family:'Archivo';font-size:12px;letter-spacing:.26em;color:#a9803a;font-weight:700">EXPERIENCIA & POSTVENTA</span>
+        <h2 style="font-family:'Archivo';font-weight:800;font-size:clamp(28px,3.8vw,48px);line-height:1.05;letter-spacing:-.02em;margin:14px 0 20px">La compra es el inicio de la relación, no el final.</h2>
+        <p style="font-size:16px;line-height:1.65;color:#4a5754;max-width:48ch">Acompañamos a cada cliente con garantía real, reposición de inventario y un asesor que conoce su operación. Así construimos relaciones que duran años, no transacciones.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:14px;margin-top:30px">
+          <div style="display:flex;align-items:center;gap:10px;background:#fff;border:1px solid #e2ddd0;padding:12px 18px;border-radius:3px"><span style="font-family:'Archivo';font-weight:800;font-size:22px;color:#c99b47">24h</span><span style="font-size:13px;color:#4a5754;line-height:1.3">Respuesta a<br>consultas técnicas</span></div>
+          <div style="display:flex;align-items:center;gap:10px;background:#fff;border:1px solid #e2ddd0;padding:12px 18px;border-radius:3px"><span style="font-family:'Archivo';font-weight:800;font-size:22px;color:#c99b47">100%</span><span style="font-size:13px;color:#4a5754;line-height:1.3">Producto con<br>garantía</span></div>
+        </div>
+      </div>
+      <div data-reveal style="opacity:0;transform:translateY(24px);transition:.75s .12s;position:relative;aspect-ratio:1/0.85;background:#16201e;border-radius:6px;overflow:hidden;display:flex;align-items:center;justify-content:center">
+        <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(216,173,99,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(216,173,99,.07) 1px,transparent 1px);background-size:40px 40px"></div>
+        <svg width="55%" viewBox="0 0 200 200" fill="none" style="position:relative"><circle cx="100" cy="100" r="70" stroke="rgba(216,173,99,.25)" stroke-width="1"/><circle cx="100" cy="100" r="70" stroke="#d8ad63" stroke-width="2" stroke-dasharray="330 110" stroke-linecap="round" transform="rotate(-90 100 100)"/><path d="M100 50 L120 60 v22 c0 18-12 30-20 36 -8-6-20-18-20-36 V60z" fill="none" stroke="#d8ad63" stroke-width="2"/><path d="M91 92 l6 6 12-13" stroke="#d8ad63" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div style="position:absolute;bottom:24px;left:24px;right:24px;display:flex;justify-content:space-between;color:#aebbb6;font-size:12px;font-family:'Archivo';letter-spacing:.1em"><span>GARANTÍA</span><span>REPOSICIÓN</span><span>ASESORÍA</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CONTACTO / CTA ================= -->
+  <section id="contacto" data-screen-label="Contacto" style="background:radial-gradient(120% 90% at 20% 10%,#22322f,#16201e 60%,#101816);padding:clamp(70px,9vw,130px) clamp(20px,5vw,60px);position:relative;overflow:hidden">
+    <div style="position:absolute;left:-80px;bottom:-80px;width:360px;height:360px;background:radial-gradient(circle,rgba(216,173,99,.09),transparent 70%)"></div>
+    <div class="fl-cta-grid" style="max-width:1360px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:clamp(40px,6vw,80px);position:relative">
+      <div data-reveal style="opacity:0;transform:translateY(24px);transition:.75s">
+        <span style="font-family:'Archivo';font-size:12px;letter-spacing:.26em;color:#d8ad63;font-weight:700">HABLEMOS</span>
+        <h2 style="font-family:'Archivo';font-weight:800;font-size:clamp(30px,4.4vw,58px);line-height:1.02;letter-spacing:-.025em;color:#f5f1e8;margin:14px 0 22px">Solicite su cotización hoy.</h2>
+        <p style="font-size:16.5px;line-height:1.65;color:#aebbb6;max-width:44ch;margin-bottom:36px">Cuéntenos qué necesita su operación y nuestro equipo le responderá con una propuesta a su medida.</p>
+        <div style="display:flex;flex-direction:column;gap:2px">
+          <a href="mailto:comercial@frontlinelatam.com" style="display:flex;align-items:center;gap:16px;padding:20px 0;border-top:1px solid rgba(255,255,255,.1)">
+            <span style="width:44px;height:44px;flex:none;border-radius:3px;background:rgba(216,173,99,.12);display:flex;align-items:center;justify-content:center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="#d8ad63" stroke-width="1.5"/><path d="M4 7l8 6 8-6" stroke="#d8ad63" stroke-width="1.5"/></svg></span>
+            <span><span style="display:block;font-size:12px;color:#7d8f8a;letter-spacing:.06em">CORREO</span><span style="display:block;font-size:17px;color:#f5f1e8;font-weight:600">comercial@frontlinelatam.com</span></span>
+          </a>
+          <a href="tel:0999288710" style="display:flex;align-items:center;gap:16px;padding:20px 0;border-top:1px solid rgba(255,255,255,.1)">
+            <span style="width:44px;height:44px;flex:none;border-radius:3px;background:rgba(216,173,99,.12);display:flex;align-items:center;justify-content:center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 4h4l2 5-3 2c1 3 3 5 6 6l2-3 5 2v4c0 1-1 2-2 2C10 22 2 14 2 6c0-1 1-2 2-2z" stroke="#d8ad63" stroke-width="1.5" stroke-linejoin="round"/></svg></span>
+            <span><span style="display:block;font-size:12px;color:#7d8f8a;letter-spacing:.06em">TELÉFONO / WHATSAPP</span><span style="display:block;font-size:17px;color:#f5f1e8;font-weight:600">099 928 8710</span></span>
+          </a>
+          <div style="display:flex;align-items:center;gap:16px;padding:20px 0;border-top:1px solid rgba(255,255,255,.1);border-bottom:1px solid rgba(255,255,255,.1)">
+            <span style="width:44px;height:44px;flex:none;border-radius:3px;background:rgba(216,173,99,.12);display:flex;align-items:center;justify-content:center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 21c5-5 8-8 8-12a8 8 0 10-16 0c0 4 3 7 8 12z" stroke="#d8ad63" stroke-width="1.5"/><circle cx="12" cy="9" r="2.5" stroke="#d8ad63" stroke-width="1.5"/></svg></span>
+            <span><span style="display:block;font-size:12px;color:#7d8f8a;letter-spacing:.06em">UBICACIÓN</span><span style="display:block;font-size:17px;color:#f5f1e8;font-weight:600">Ibarra, Imbabura · Ecuador</span></span>
+          </div>
+        </div>
+      </div>
+      <form id="fl-form" data-reveal style="opacity:0;transform:translateY(24px);transition:.75s .12s;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.1);border-radius:6px;padding:clamp(24px,3vw,40px);display:flex;flex-direction:column;gap:18px">
+        <div style="display:flex;flex-direction:column;gap:7px">
+          <label for="fn" style="font-size:12.5px;color:#9aaba6;letter-spacing:.04em">Nombre</label>
+          <input id="fn" name="nombre" type="text" placeholder="Su nombre" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.14);border-radius:3px;padding:13px 15px;color:#f5f1e8;font-size:15px;font-family:inherit;outline:none">
+        </div>
+        <div style="display:flex;flex-direction:column;gap:7px">
+          <label for="fc" style="font-size:12.5px;color:#9aaba6;letter-spacing:.04em">Empresa</label>
+          <input id="fc" name="empresa" type="text" placeholder="Nombre de la empresa" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.14);border-radius:3px;padding:13px 15px;color:#f5f1e8;font-size:15px;font-family:inherit;outline:none">
+        </div>
+        <div style="display:flex;flex-direction:column;gap:7px">
+          <label for="fe" style="font-size:12.5px;color:#9aaba6;letter-spacing:.04em">Correo</label>
+          <input id="fe" name="correo" type="email" placeholder="correo@empresa.com" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.14);border-radius:3px;padding:13px 15px;color:#f5f1e8;font-size:15px;font-family:inherit;outline:none">
+        </div>
+        <div style="display:flex;flex-direction:column;gap:7px">
+          <label for="fm" style="font-size:12.5px;color:#9aaba6;letter-spacing:.04em">¿Qué necesita?</label>
+          <textarea id="fm" name="mensaje" rows="4" placeholder="Describa el producto o requerimiento" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.14);border-radius:3px;padding:13px 15px;color:#f5f1e8;font-size:15px;font-family:inherit;outline:none;resize:vertical"></textarea>
+        </div>
+        <button type="submit" style="display:inline-flex;align-items:center;justify-content:center;gap:10px;background:linear-gradient(120deg,#e8c883,#c99b47);color:#16201e;font-weight:700;font-size:15.5px;padding:16px;border:none;border-radius:3px;cursor:pointer;font-family:inherit;box-shadow:0 14px 40px -14px rgba(216,173,99,.7)">Enviar solicitud
+          <svg width="15" height="15" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="#16201e" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      </form>
+    </div>
+  </section>
+
+  <!-- ================= FOOTER ================= -->
+  <footer style="background:#101816;padding:clamp(50px,6vw,80px) clamp(20px,5vw,60px) 40px;border-top:1px solid rgba(255,255,255,.07)">
+    <div style="max-width:1360px;margin:0 auto">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:40px;padding-bottom:44px;border-bottom:1px solid rgba(255,255,255,.08)">
+        <div style="min-width:220px">
+          <a href="#top" style="display:flex;align-items:center;gap:12px;margin-bottom:18px">
+            <svg width="30" height="34" viewBox="0 0 34 38" fill="none"><path d="M2 4.5C2 3.12 3.12 2 4.5 2H29.5C30.88 2 32 3.12 32 4.5V22.2C32 23.05 31.57 23.84 30.86 24.3L18.1 32.6C17.43 33.04 16.57 33.04 15.9 32.6L3.14 24.3C2.43 23.84 2 23.05 2 22.2V4.5Z" fill="url(#gsh2)"/><path d="M13 9H24V13.2H17.2V16.4H23V20.4H17.2V27L13 24.3V9Z" fill="#101816"/><defs><linearGradient id="gsh2" x1="2" y1="2" x2="30" y2="33"><stop stop-color="#e8c883"/><stop offset="1" stop-color="#c99b47"/></linearGradient></defs></svg>
+            <span style="display:flex;flex-direction:column;line-height:.92"><span style="font-family:'Archivo';font-weight:800;letter-spacing:.2em;font-size:15px;color:#f2ede3">FRONTLINE</span><span style="font-family:'Archivo';font-weight:500;letter-spacing:.44em;font-size:8.5px;color:#d8ad63;margin-left:2px">LATAM</span></span>
+          </a>
+          <p style="font-size:13.5px;line-height:1.6;color:#7d8f8a;max-width:30ch">Producto industrial de primera línea, respaldado por ingeniería y soporte que perdura.</p>
+        </div>
+        <div>
+          <h4 style="font-family:'Archivo';font-size:12px;letter-spacing:.16em;color:#d8ad63;margin-bottom:16px">PRODUCTOS</h4>
+          <div style="display:flex;flex-direction:column;gap:11px;font-size:14px"><a href="#productos" style="color:#9aaba6">Herramientas & Ferretería</a><a href="#productos" style="color:#9aaba6">Seguridad Industrial</a><a href="#productos" style="color:#9aaba6">Aprovisionamiento</a><a href="#productos" style="color:#9aaba6">Campers & Módulos</a><a href="#productos" style="color:#9aaba6">Equipamiento</a></div>
+        </div>
+        <div>
+          <h4 style="font-family:'Archivo';font-size:12px;letter-spacing:.16em;color:#d8ad63;margin-bottom:16px">EMPRESA</h4>
+          <div style="display:flex;flex-direction:column;gap:11px;font-size:14px"><a href="#industrias" style="color:#9aaba6">Industrias</a><a href="#diferencia" style="color:#9aaba6">Nosotros</a><a href="#soporte" style="color:#9aaba6">Soporte & Postventa</a><a href="#contacto" style="color:#9aaba6">Contacto</a></div>
+        </div>
+        <div>
+          <h4 style="font-family:'Archivo';font-size:12px;letter-spacing:.16em;color:#d8ad63;margin-bottom:16px">CONTACTO</h4>
+          <div style="display:flex;flex-direction:column;gap:11px;font-size:14px"><a href="mailto:comercial@frontlinelatam.com" style="color:#9aaba6">comercial@frontlinelatam.com</a><a href="tel:0999288710" style="color:#9aaba6">099 928 8710</a><span style="color:#7d8f8a">Ibarra, Imbabura · Ecuador</span></div>
+        </div>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;align-items:center;padding-top:26px">
+        <span style="font-size:13px;color:#5f7873">© <span id="fl-year">2026</span> Frontline Latam. Todos los derechos reservados.</span>
+        <span style="font-size:13px;color:#5f7873">Ecuador · Industria pesada</span>
+      </div>
+    </div>
+  </footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  componentDidMount() {
+    const root = document.getElementById('fl-root');
+    if (!root) return;
+
+    // year
+    const y = root.querySelector('#fl-year'); if (y) y.textContent = new Date().getFullYear();
+
+    // reveal on scroll
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.style.opacity = '1';
+          e.target.style.transform = 'none';
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+    root.querySelectorAll('[data-reveal]').forEach(el => io.observe(el));
+
+    // counters
+    const fmt = n => n.toLocaleString('es-EC');
+    const cio = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        const el = e.target;
+        const target = parseFloat(el.getAttribute('data-count'));
+        const pre = el.getAttribute('data-prefix') || '';
+        const suf = el.getAttribute('data-suffix') || '';
+        const dur = 1600; const start = performance.now();
+        const tick = (now) => {
+          const p = Math.min(1, (now - start) / dur);
+          const eased = 1 - Math.pow(1 - p, 3);
+          el.textContent = pre + fmt(Math.round(target * eased)) + suf;
+          if (p < 1) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+        cio.unobserve(el);
+      });
+    }, { threshold: 0.5 });
+    root.querySelectorAll('[data-count]').forEach(el => cio.observe(el));
+
+    // nav scroll state
+    const nav = root.querySelector('#fl-nav');
+    const onScroll = () => {
+      const s = window.scrollY;
+      if (nav) {
+        if (s > 40) {
+          nav.style.background = 'rgba(16,23,21,.86)';
+          nav.style.backdropFilter = 'blur(14px)';
+          nav.style.padding = '13px clamp(16px,4vw,52px)';
+          nav.style.borderBottom = '1px solid rgba(255,255,255,.08)';
+          nav.style.boxShadow = '0 10px 40px -20px rgba(0,0,0,.7)';
+        } else {
+          nav.style.background = 'rgba(16,23,21,0)';
+          nav.style.backdropFilter = 'blur(0px)';
+          nav.style.padding = '22px clamp(16px,4vw,52px)';
+          nav.style.borderBottom = '1px solid rgba(255,255,255,0)';
+          nav.style.boxShadow = 'none';
+        }
+      }
+      // parallax hero shapes
+      root.querySelectorAll('[data-px]').forEach(el => {
+        const f = parseFloat(el.getAttribute('data-px'));
+        el.style.translate = '0 ' + (s * f * -0.35) + 'px';
+      });
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    // hero glow follows mouse
+    const glow = root.querySelector('#hero-glow');
+    const hero = root.querySelector('#top');
+    if (glow && hero) {
+      hero.addEventListener('mousemove', (ev) => {
+        const r = hero.getBoundingClientRect();
+        glow.style.left = ((ev.clientX - r.left)) + 'px';
+        glow.style.top = ((ev.clientY - r.top)) + 'px';
+      });
+    }
+
+    // mobile menu
+    const burger = root.querySelector('#fl-burger');
+    const menu = root.querySelector('#fl-mobile');
+    if (burger && menu) {
+      let open = false;
+      const toggle = (v) => {
+        open = v;
+        menu.style.display = open ? 'flex' : 'none';
+        document.body.style.overflow = open ? 'hidden' : '';
+        const bars = burger.querySelectorAll('span');
+        if (open) {
+          bars[0].style.transform = 'translateY(7px) rotate(45deg)';
+          bars[1].style.opacity = '0';
+          bars[2].style.transform = 'translateY(-7px) rotate(-45deg)';
+          bars[2].style.width = '26px';
+        } else {
+          bars[0].style.transform = ''; bars[1].style.opacity = '1';
+          bars[2].style.transform = ''; bars[2].style.width = '18px';
+        }
+      };
+      burger.addEventListener('click', () => toggle(!open));
+      menu.querySelectorAll('[data-mclose]').forEach(a => a.addEventListener('click', () => toggle(false)));
+    }
+
+    // card hover lift
+    root.querySelectorAll('[data-tilt]').forEach(card => {
+      const isDark = card.style.background.indexOf('#16201e') === 0;
+      card.addEventListener('mouseenter', () => {
+        card.style.transform = 'translateY(-6px)';
+        card.style.boxShadow = '0 26px 50px -24px rgba(22,32,30,.4)';
+        card.style.borderColor = '#c99b47';
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = 'none';
+        card.style.boxShadow = 'none';
+        card.style.borderColor = isDark ? '#16201e' : '#e2ddd0';
+      });
+    });
+
+    // form -> mailto
+    const form = root.querySelector('#fl-form');
+    if (form) {
+      form.addEventListener('submit', (ev) => {
+        ev.preventDefault();
+        const d = new FormData(form);
+        const body = `Nombre: ${d.get('nombre')||''}%0D%0AEmpresa: ${d.get('empresa')||''}%0D%0ACorreo: ${d.get('correo')||''}%0D%0A%0D%0A${d.get('mensaje')||''}`;
+        window.location.href = `mailto:comercial@frontlinelatam.com?subject=Solicitud de cotización - Frontline Latam&body=${body}`;
+      });
+    }
+  }
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>
